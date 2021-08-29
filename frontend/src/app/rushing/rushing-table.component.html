@@ -1,0 +1,58 @@
+<div class="rushingContainer">
+    <h1>Statistics - NFL Rushing</h1>
+
+    <p-table #dt [columns]="rushingColumnHeaders" [value]="rushingTableDataSource" dataKey="id"
+        class="ui-table-rushingCardView" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        csvSeparator=";" exportFilename="rushing-table">
+
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2"
+                    pTooltip="CSV" tooltipPosition="bottom" label="Export To CSV"></button>
+            </div>
+
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of rushingColumnHeaders" pSortableColumn="{{col.field}}">
+                    {{col.header}}
+                    <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'Player', 'contains')"
+                        placeholder="Name" class="ui-column-filter">
+                </th>
+                <th>
+                    <p-dropdown [options]="teams" (onChange)="dt.filter($event.value, 'Team', 'equals')"
+                        class="ui-column-filter" placeholder="All" [showClear]="true">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </th>
+                <th>
+                    <p-dropdown [options]="positions" (onChange)="dt.filter($event.value, 'Pos', 'contains')"
+                        class="ui-column-filter" placeholder="All" [showClear]="true">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </th>
+                <th colspan="12"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="rushingColumnHeaders">
+            <tr class="ui-selectable-row" [pSelectableRow]="rowData">
+                <td *ngFor="let contentCol of rushingColumnHeaders" class="ui-resizable-column">
+                    <p>
+                        {{rowData[contentCol.field]}}
+                    </p>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

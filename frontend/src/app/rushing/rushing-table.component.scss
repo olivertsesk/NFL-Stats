@@ -1,0 +1,17 @@
+
+
+:host ::ng-deep .rushingContainer {
+    padding: 26px;
+    display: block;
+    position: relative;
+    margin-top: 60px;
+
+    .ui-dropdown-clearable {
+        min-width: 100%;
+        width: max-content;
+    }
+    .ui-column-filter {
+        display: block;
+        width: 100%;
+    }
+}
